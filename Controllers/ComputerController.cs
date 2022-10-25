@@ -21,11 +21,48 @@ public class ComputerController : Controller
 
         if(computer == null)
         {
-            return RedirectToAction("Index"); //HttpNotFound()
+            return RedirectToAction("Index");
         }
 
         return View(computer);
     }
 
-    
+    public IActionResult Delete(int id){
+        _context.Computers.Remove(_context.Computers.Find(id));
+        _context.SaveChanges();
+        return View();
+    }
+
+    public IActionResult Create(){
+                
+        return View();
+    }
+
+    public IActionResult Creating([FromForm] int id, [FromForm] string ram, [FromForm] string processor){
+        
+        if(_context.Computers.Find(id) != null)
+        {
+            return Content("Computador já cadastrado");
+        }
+        
+        Computer computer = new Computer(id,ram,processor);
+        _context.Computers.Add(computer);
+        _context.SaveChanges();
+        return RedirectToAction("Create");
+    }
+
+    public IActionResult Update([FromForm] int id, [FromForm] string ram, [FromForm] string processor){
+        Computer computer = _context.Computers.Find(id);
+
+        if(computer == null)
+        {
+            return View();
+        }
+
+        computer.Ram = ram;
+        computer.Processor = processor;
+        _context.Computers.Update(computer);
+        _context.SaveChanges();
+        return Content("Atualizado com sucesso");
+    }
 }
