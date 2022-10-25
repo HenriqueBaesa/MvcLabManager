@@ -1,3 +1,5 @@
+@model MvcLabManager.Models.Computer
+
 @{
     ViewData["Title"] = "Atualizar Computadores";
 }
@@ -10,8 +12,7 @@
 <div class="container">
     <form action="Creating" method="POST">
         <div class="form-group">
-            <label for="id">Id</label>
-            <input type="number" name="id" id="id" class="form-control" required>
+            <input type="number" name="id" id="id" class="form-control" value=@Model.Id hidden>
         </div>  
         <div class="form-group" >
             <label for="ram">Ram</label>

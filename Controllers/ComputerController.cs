@@ -51,6 +51,19 @@ public class ComputerController : Controller
         return RedirectToAction("Create");
     }
 
+    [HttpGet]
+    public IActionResult Update([FromRoute] int id){
+        Computer computer = _context.Computers.Find(id);
+
+        if(computer == null)
+        {
+            return NotFound();
+        }
+
+        return View(computer);
+    }
+
+    [HttpPost]
     public IActionResult Update([FromForm] int id, [FromForm] string ram, [FromForm] string processor){
         Computer computer = _context.Computers.Find(id);
 
@@ -63,6 +76,6 @@ public class ComputerController : Controller
         computer.Processor = processor;
         _context.Computers.Update(computer);
         _context.SaveChanges();
-        return Content("Atualizado com sucesso");
+        return RedirectToAction("Index");
     }
 }
